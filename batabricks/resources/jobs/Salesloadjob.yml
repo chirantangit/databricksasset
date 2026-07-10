@@ -1,0 +1,25 @@
+resources:
+  jobs:
+    Samplesalesload:
+      name: Samplesalesload
+      trigger:
+        pause_status: UNPAUSED
+        file_arrival:
+          url: /Volumes/workspace/test_schema/sales/
+      tasks:
+        - task_key: salesload
+          notebook_task:
+            notebook_path: /Workspace/Users/das.chirantan@tcs.com/Sample_Sales_data_load
+            base_parameters:
+              order_id: "{{job.parameters.order_id}}"
+            source: WORKSPACE
+      queue:
+        enabled: true
+      parameters:
+        - name: order_id
+          default: "3"
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "5"
+      performance_target: PERFORMANCE_OPTIMIZED
